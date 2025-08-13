@@ -20,6 +20,8 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageReference Include="Pgvector" Version="0.3.2" />
+    <PackageReference Include="Pgvector.EntityFrameworkCore" Version="0.2.2" />
     <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.58" />
   </ItemGroup>
@@ -30,7 +32,6 @@
     <Folder Include="Commen\Helpers\" />
     <Folder Include="Infrastructure\Messaging\" />
     <Folder Include="Infrastructure\Caching\" />
-    <Folder Include="Infrastructure\AI\" />
     <Folder Include="Infrastructure\Persistence\Configurations\" />
     <Folder Include="Features\Modules\" />
     <Folder Include="Features\Modules\Products\" />
