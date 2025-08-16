@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using NeoCart.Common.Middleware;
 using NeoCart.Infrastructure.Persistence.Contexts;
 using NeoCart.Infrastructure.Services;
 using NeoCommerce.Application.Contracts.Services;
 using NeoCommerce.Infrastructure.Jobs;
 using Npgsql;
+using Serilog;
 
 namespace NeoCart
 {
@@ -22,8 +24,13 @@ namespace NeoCart
                     npg => npg.UseVector() // <- REQUIRED
                 )
             );
-
-
+            builder.Host.UseSerilog((context, services, configuration) =>
+            {
+                configuration
+                    .ReadFrom.Configuration(context.Configuration)
+                    .ReadFrom.Services(services)
+                    .Enrich.FromLogContext();
+            });
 
             builder.Services.AddScoped<IEventPublisher>(sp => sp.GetRequiredService<EventPublisher>());
             builder.Services.AddHostedService<RabbitMQConsumer>();
@@ -39,7 +46,9 @@ namespace NeoCart
             {
                 app.MapOpenApi();
             }
-
+            app.UseMiddleware<RequestLoggingAndValidationMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+            app.UseMiddleware<TransactionMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

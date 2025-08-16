@@ -23,11 +23,14 @@
     <PackageReference Include="Pgvector" Version="0.3.2" />
     <PackageReference Include="Pgvector.EntityFrameworkCore" Version="0.2.2" />
     <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="8.2.2" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.58" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commen\Middleware\" />
     <Folder Include="Commen\Exceptions\" />
     <Folder Include="Commen\Helpers\" />
     <Folder Include="Infrastructure\Messaging\" />
