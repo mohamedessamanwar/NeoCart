@@ -2,8 +2,12 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using NeoCart.Commen.BaseController;
+using NeoCart.Commen.BaseUseCase;
 using NeoCart.Common.Middleware;
+using NeoCart.Features.Modules.Products.CreateProduct.Commands;
 using NeoCart.Infrastructure.Persistence.Contexts;
+using NeoCart.Infrastructure.Persistence.Repositories;
 using NeoCart.Infrastructure.Services;
 using NeoCommerce.Application.Contracts.Services;
 using NeoCommerce.Infrastructure.Jobs;
@@ -105,6 +109,16 @@ namespace NeoCart
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
             #endregion
+
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            // Replace the problematic line with the following:
+            builder.Services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(CreateProductCommand).Assembly);
+            });
+            builder.Services.AddScoped<UseCaseParam>();
+            builder.Services.AddScoped<ControllerParam>();
 
             var app = builder.Build();
 

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace NeoCart.Infrastructure.Persistence.Repositories
 {
-    public class GenericRepository<T> where T : class, IBaseEntity
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, IBaseEntity
     {
         private readonly ApplicationDbContext _context;
         public GenericRepository(ApplicationDbContext context)
@@ -16,26 +16,6 @@ namespace NeoCart.Infrastructure.Persistence.Repositories
         public IQueryable<T> Get()
         {
             return _context.Set<T>();
-        }
-
-        public async Task<T> GetByIdAsync(int id)
-        {
-            return await _context.Set<T>().FindAsync(id);
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await _context.Set<T>().ToListAsync();
-        }
-
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
-        {
-            return await _context.Set<T>().Where(predicate).ToListAsync();
-        }
-
-        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
-        {
-            return await _context.Set<T>().FirstOrDefaultAsync(predicate);
         }
 
         public async Task<T> AddAsync(T entity)
@@ -71,14 +51,7 @@ namespace NeoCart.Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteByIdAsync(int id)
-        {
-            var entity = await GetByIdAsync(id);
-            if (entity != null)
-            {
-                await DeleteAsync(entity);
-            }
-        }
+
 
         public async Task DeleteRangeAsync(IEnumerable<T> entities)
         {

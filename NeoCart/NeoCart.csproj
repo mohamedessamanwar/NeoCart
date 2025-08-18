@@ -35,11 +35,10 @@
   <ItemGroup>
     <Folder Include="Commen\Exceptions\" />
     <Folder Include="Commen\Helpers\" />
+    <Folder Include="Features\Commen\Product\ProductExistQuary\" />
     <Folder Include="Infrastructure\Messaging\" />
     <Folder Include="Infrastructure\Caching\" />
     <Folder Include="Infrastructure\Persistence\Configurations\" />
-    <Folder Include="Features\Modules\" />
-    <Folder Include="Features\Modules\Products\" />
   </ItemGroup>
 
 </Project>

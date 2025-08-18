@@ -1,9 +1,13 @@
-﻿namespace NeoCart.Commen.ResponseViewModel
+﻿using NeoCart.Commen.Helper;
+
+namespace NeoCart.Commen.ResponseViewModel
 {
     public class ApiResponse<T>
     {
         public bool Status { get; set; }
         public string Message { get; set; }
+        public StatusCode StatusCode { get; set; } = StatusCode.Success;
+
         public T Data { get; set; }
         public List<string> Errors { get; set; }
 
@@ -23,14 +27,39 @@
         }
 
         public static ApiResponse<T> Success(T data, string message = "") =>
-            new ApiResponse<T>(data, message, true);
+            new ApiResponse<T>
+            {
+                Data = data,
+                Message = message,
+                Status = true,
+                StatusCode = StatusCode.Success
+            };
+
+        public static ApiResponse<T> Success(T data, StatusCode statusCode, string message = "") =>
+            new ApiResponse<T>
+            {
+                Data = data,
+                Message = message,
+                Status = true,
+                StatusCode = statusCode
+            };
 
         public static ApiResponse<T> Fail(string message, List<string> errors = null) =>
             new ApiResponse<T>
             {
                 Status = false,
                 Message = message,
-                Errors = errors ?? new List<string>()
+                Errors = errors ?? new List<string>(),
+                StatusCode = StatusCode.BadRequest
+            };
+
+        public static ApiResponse<T> Fail(string message, StatusCode statusCode, List<string> errors = null) =>
+            new ApiResponse<T>
+            {
+                Status = false,
+                Message = message,
+                Errors = errors ?? new List<string>(),
+                StatusCode = statusCode
             };
     }
 }

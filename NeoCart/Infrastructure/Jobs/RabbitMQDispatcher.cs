@@ -59,7 +59,7 @@ namespace NeoCommerce.Infrastructure.Jobs
                         await db.SaveChangesAsync(stoppingToken);
                     }
 
-                    await tx.CommitAsync(stoppingToken);
+                    //  await tx.CommitAsync(stoppingToken);
                     await Task.Delay(2000, stoppingToken);
                 }
                 catch (Exception ex)
